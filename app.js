@@ -8,6 +8,12 @@ const app = new Koa()
 const templateDir = pathlib.join(__dirname, 'templates')
 const here = process.cwd()
 
+app.use(async (ctx, next) => {
+  let req = ctx.request
+  console.log(`${req.method} - ${ctx.url}`)
+  await next()
+})
+
 app.use(async (ctx) => {
   let url = ctx.url
   if (url === '/') {
