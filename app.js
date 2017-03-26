@@ -5,6 +5,7 @@ const pug = require('pug')
 const _stylus = require('stylus')
 
 const app = new Koa()
+const here = process.cwd()
 
 app.use(async (ctx) => {
   let url = ctx.url
