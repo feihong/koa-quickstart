@@ -12,7 +12,7 @@ app.use(async (ctx) => {
   if (url === '/') {
     url = ''
   }
-  let path = pathlib.join(__dirname, url)
+  let path = pathlib.join(here, url)
 
   let stats = await getStats(path)
   if (stats === null) {
