@@ -1,2 +1,5 @@
-# koa-quickstart
-Quickstart for Koa
+# Koa Quickstart
+
+## Installation
+
+`yarn add koa koa-route axios`
