@@ -1,9 +1,37 @@
 extends /bootstrap.pug
 
 block title
-  About
+  | About
     
+block extrahead 
+  style.
+    .row div {
+      border: 1px dashed gray;
+      padding: 1rem; 
+    }
+  
 block content
   h1 About this site
   
   p Can you tell? We are using #[a(href='http://getbootstrap.com/') Bootstrap] on this page!
+
+  mixin icon(name) 
+    span(class='glyphicon glyphicon-' + name)
+      
+  p
+    button.btn.btn-primary This is a button
+      
+  p 
+    | Glyphs: 
+    +icon('thumbs-down')
+    | 
+    +icon('thumbs-up')
+    |  
+    +icon('hand-right')
+    |  
+    +icon('hand-left')
+
+  .row
+    .col-md-2 Col 1
+    .col-md-6 Col 2
+    .col-md-4 Col 3

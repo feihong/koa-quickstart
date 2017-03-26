@@ -9,8 +9,10 @@ html(class="no-js" lang="en")
     link(link rel="stylesheet"  href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
     block extrahead
         
-  body(class='container')
-    block content
-      
+  body
+    .container
+      block content
+    
+    script(src="//code.jquery.com/jquery-3.2.1.slim.min.js")
     script(src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
     block extrascript
