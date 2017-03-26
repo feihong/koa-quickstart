@@ -5,6 +5,7 @@ const pug = require('pug')
 const _stylus = require('stylus')
 
 const app = new Koa()
+const templateDir = pathlib.join(__dirname, 'templates')
 const here = process.cwd()
 
 app.use(async (ctx) => {
@@ -27,7 +28,7 @@ app.use(async (ctx) => {
       ctx.body = await renderTemplate(indexFile)
     } else {
       ctx.response.status = 404
-      ctx.body = `${path} is a directory`
+      ctx.body = `File not found: ${path} is a directory`
     }
     return
   }
@@ -71,9 +72,9 @@ async function isFile(path) {
   return (stats === null) ? false : stats.isFile()
 }
 
-async function renderTemplate(templateFile) {
-  let text = await readFile(templateFile)
-  return pug.render(text)
+async function renderTemplate(pugFile) {
+  let text = await readFile(pugFile)
+  return pug.render(text, {filename: pugFile, basedir: templateDir})
 }
 
 async function renderStylesheet(stylFile) {

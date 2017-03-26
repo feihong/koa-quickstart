@@ -1,8 +1,9 @@
-doctype html
-html(lang="en")
-  head
-    title About
-  body
-    h1 About
+extends /bootstrap.pug
+
+block title
+  About
     
-    p There are #[span(style='text-decoration:underline') many things] I could talk to you about right now.
+block content
+  h1 About this site
+  
+  p Can you tell? We are using #[a(href='http://getbootstrap.com/') Bootstrap] on this page!

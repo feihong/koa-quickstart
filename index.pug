@@ -1,17 +1,19 @@
-doctype html
-html(lang="en")
-  head
-    title Home
-    link(rel='stylesheet', href='style.styl')  
-  body
-    h1 Pug - node template engine
+extends /base.pug
+
+block title 
+  | Koa Quickstart
+  
+block extrahead
+  link(rel='stylesheet' href='style.styl')
+
+block content
+  h1 Koa Quickstart
+
+  p 
+    a(href='about/') About this site
     
-    #container.col
-      p 
-        a(href='about/') About this site
-        
-      p You are #[strong amazing] and #[em also very] cool!
-      
-      p.
-        Pug is a terse and simple templating language with a
-        strong focus on performance and powerful features.
+  p You are #[strong amazing] and #[em also very] cool!
+  
+  p.
+    Pug is a terse and simple templating language with a
+    strong focus on performance and powerful features.
