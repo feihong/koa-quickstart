@@ -1,13 +1,10 @@
 const fs = require('fs')
 const pathlib = require('path')
-const promisify = require('es6-promisify')
 const Koa = require('koa')
 const pug = require('pug')
-const stylus = require('stylus')
+const _stylus = require('stylus')
 
 const app = new Koa()
-const _readFile = promisify(fs.readFile)
-const readFile = path => _readFile(path, 'utf8')
 
 app.use(async (ctx) => {
   let url = ctx.url
@@ -56,6 +53,18 @@ function getStats(path) {
   })
 }
 
+function readFile(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf8', (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
+}
+
 async function isFile(path) {
   let stats = await getStats(path)
   return (stats === null) ? false : stats.isFile()
@@ -68,12 +77,12 @@ async function renderTemplate(templateFile) {
 
 async function renderStylesheet(stylFile) {
   let text = await readFile(stylFile)
-  return await asyncStylus(text, stylFile)
+  return await stylus(text, stylFile)
 }
 
-function asyncStylus(text, stylFile) {
+function stylus(text, stylFile) {
   return new Promise((resolve, reject) => {
-    stylus(text)
+    _stylus(text)
       .set('filename', stylFile)
       .render((err, css) => {
         if (err) {
