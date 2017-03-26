@@ -1,12 +1,13 @@
-const path = require('path')
+const fs = require('fs')
+const pathlib = require('path')
 const promisify = require('es6-promisify')
 const Koa = require('koa')
 const pug = require('pug')
 const stylus = require('stylus')
 
 const app = new Koa()
-const readFile = promisify(require('fs').readFile)
-
+const readFile = promisify(fs.readFile)
+const stat = promisify(fs.stat)
 
 app.use(async (ctx) => {
   let url = ctx.url
@@ -15,19 +16,19 @@ app.use(async (ctx) => {
     return
   }
 
-  let filePath = path.join(__dirname, ctx.url)
+  let path = pathlib.join(__dirname, ctx.url)
   let text
   try {
-    text = await readFile(filePath, 'utf8')
+    text = await readFile(path, 'utf8')
   } catch (err) {
     ctx.response.status = 404
     ctx.body = err.message
     return
   }
-  let ext = path.extname(filePath)
+  let ext = pathlib.extname(path)
   if (ext === '.styl') {
     ctx.response.type = 'css'
-    ctx.body = await renderStylesheet(text, filePath)
+    ctx.body = await renderStylesheet(text, path)
   } else {
     ctx.response.type = 'text'
     ctx.body = text
@@ -39,10 +40,10 @@ async function renderTemplate(templateFile) {
   return pug.render(text)
 }
 
-function renderStylesheet(text, filename) {
+function renderStylesheet(text, ssFile) {
   return new Promise((resolve, reject) => {
     stylus(text)
-      .set('filename', filename)
+      .set('filename', ssFile)
       .render((err, css) => {
         if (err) {
           reject(err)
