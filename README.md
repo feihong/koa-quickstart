@@ -4,7 +4,7 @@
 
 ```
 yarn global add nodemon
-yarn add koa koa-route axios
+yarn install
 ```
 
 ## Run

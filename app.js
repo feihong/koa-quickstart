@@ -4,6 +4,7 @@ const join = pathlib.join
 const Koa = require('koa')
 const pug = require('pug')
 const stylus = require('stylus')
+const compiler = require('node-elm-compiler')
 
 const app = new Koa()
 const templateDir = join(__dirname, 'templates')

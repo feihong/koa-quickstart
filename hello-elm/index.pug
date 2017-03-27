@@ -1,0 +1,17 @@
+extends /bootstrap.pug
+
+block title
+  | Hello World Elm
+
+block extrahead
+  script src='HelloElm.elm'
+
+block extrascript
+  script.
+    Elm.Main.embed(document.getElementById('main'))
+
+block content
+  h1 Hello World Elm!
+
+  #main This is where the Elm app will be rendered
+    
