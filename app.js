@@ -72,6 +72,18 @@ app.use(async (ctx, next) => {
   await next()
 })
 
+// If path points to an Elm source file, render it as JS.
+app.use(async (ctx, next) => {
+  let {path} = ctx.state
+  let ext = pathlib.extname(path)
+  if (ext === '.elm') {
+    ctx.response.type = 'javascript'
+    ctx.body = await compileElm(path)
+    return
+  }
+  await next()
+})
+
 // Just serve the file as-is.
 app.use(async (ctx, next) => {
   let {path} = ctx.state
@@ -128,6 +140,12 @@ async function renderStylesheet(stylFile) {
         }
       })
   })
+}
+
+async function compileElm(elmFile) {
+    let data = await compiler.compileToString(
+      [elmFile], {yes: true, cwd: pathlib.dirname(elmFile)})
+    return data.toString()
 }
 
 app.listen(8000)
