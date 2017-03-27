@@ -143,9 +143,14 @@ async function renderStylesheet(stylFile) {
 }
 
 async function compileElm(elmFile) {
-    let data = await compiler.compileToString(
-      [elmFile], {yes: true, cwd: pathlib.dirname(elmFile)})
-    return data.toString()
+    try {
+      let data = await compiler.compileToString(
+        [elmFile], {yes: true, cwd: pathlib.dirname(elmFile)})
+      return data.toString()
+    } catch (err) {
+      let text = err.toString().replace(/`/g, '\\`')
+      return 'console.error(`' + text + '`)'
+    }
 }
 
 app.listen(8000)
