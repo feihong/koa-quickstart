@@ -3,7 +3,7 @@ const pathlib = require('path')
 const join = pathlib.join
 const Koa = require('koa')
 const pug = require('pug')
-const _stylus = require('stylus')
+const stylus = require('stylus')
 
 const app = new Koa()
 const templateDir = join(__dirname, 'templates')
@@ -116,12 +116,8 @@ async function renderTemplate(pugFile) {
 
 async function renderStylesheet(stylFile) {
   let text = await readFile(stylFile)
-  return await stylus(text, stylFile)
-}
-
-function stylus(text, stylFile) {
   return new Promise((resolve, reject) => {
-    _stylus(text)
+    stylus(text)
       .set('filename', stylFile)
       .render((err, css) => {
         if (err) {
